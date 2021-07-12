@@ -1,12 +1,32 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useEffect, useMemo } from 'react';
 import './scss/home.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '@@/store/actions/profile';
 import { Row, Col, Typography, Progress, Divider } from 'antd';
 const { Title } = Typography;
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const {  
+    name = '',
+    splash_image = '',
+    splash_intro = '',
+    userID = '',
+   } = useSelector(state => state.profile);
   let frontEndStack = [];
   frontEndStack.length = 3;
   frontEndStack.fill(1);
+
+  const componentDidMount = () => {
+    dispatch(getProfile(userID));
+  }
+  const componentDidUnmount = () => {
+    console.log('Component Umount');
+  }
+  useEffect(() => {
+    componentDidMount();
+    return componentDidUnmount;
+  }, [])
   let frontEndStackMemo = frontEndStack.map(() => {
     return {
       percent: (Math.random() * 100) >> 0,
@@ -49,20 +69,18 @@ export default function Home() {
     <section className="homepg">
       <article className="homepg__rowone">
         <Row justify="space-around" align="middle">
-          <Col xs={24} lg={12} sm={12}>
+          <Col xs={24} lg={10} sm={12}>
             <section className="rowone-colone">
-              
-              <img src={`${process.env.AZURE_ASSETS}/profile_splash.png`} alt="Author splash"/>
+              <img src={splash_image} alt="Author splash"/>
             </section>
           </Col>
-          <Col xs={20} lg={12} sm={12}>
+          <Col xs={20} lg={14} sm={12}>
             <section className="rowone-coltwo">
               <Title level={2}>
-                Hi My Name is Manas Singh
+                Hi My Name is {name}
                 </Title>
                 <Title level={3}>
-                  I am Software Developer at walmart as Senior Software Engineer.
-                  I have 9 years of expreience in web technology domain primarly.
+                  {splash_intro}
               </Title>
             </section>
           </Col>
@@ -71,25 +89,25 @@ export default function Home() {
       <Divider type="horizontal" />
       <article className="homepg__rowtwo">
         <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} lg={24} sm={24}>
+        <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
             <Title>Technology Stack</Title>
             <Title level={4}>I started my career with Web application devevelopment for Samsung products using latest framework and moving forware learning and applying in backend technologies/framework</Title>
           </Col>
         </Row>
-        <Row justify="space-around" align="top">
-          <Col xs={{span: 20, push: 2 }} lg={8} md={{span: 20, push: 2 }} sm={{span: 20 }}>
+        <Row align="top">
+          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 2 }} md={{span: 20, push: 2 }} sm={{span: 20 }}>
             <section className="rowtwo-colone">
               <Title level={2}>BackEnd Stack</Title>
               {backendHTML}
             </section>
           </Col>
-          <Col xs={{span: 20, push: 2 }} lg={8} md={{span: 20, push: 2 }} sm={{span: 20}}>
+          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 0 }} md={{span: 20, push: 2 }} sm={{span: 20}}>
             <section className="rowtwo-coltwo">
                 <Title level={2}>FrontEnd Stack</Title>
                 {frontEndHTML}
             </section>
           </Col>
-          <Col xs={{span: 20, push: 2 }} lg={8} md={{span: 20, push: 2 }} sm={{span: 20 }}>
+          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 0 }} md={{span: 20, push: 2 }} sm={{span: 20 }}>
             <section className="rowtwo-coltwo">
                 <Title level={2}>Database Stack</Title>
                 {databaseHTML}
@@ -109,7 +127,7 @@ export default function Home() {
       <Divider type="horizontal" />
       <article className="homepg__rowfour">
         <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} lg={24} sm={24}>
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
             <Title>Product/Device Worked on</Title>
             <Title level={4}>I started my career with Web application devevelopment for Samsung products using latest framework and moving forware learning and applying in backend technologies/framework</Title>
           </Col>
