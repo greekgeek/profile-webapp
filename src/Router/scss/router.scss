@@ -1,0 +1,15 @@
+@import 'src/scss/_global.scss';
+.website-header {
+    margin: 10px 30px;
+    display: flex;
+    justify-content: center;
+}
+.website-body {
+    position: absolute;
+    height: calc(100% - #{$nav-width + 60px});
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+@import './router-tab.scss';
+@import './router-mobile.scss';

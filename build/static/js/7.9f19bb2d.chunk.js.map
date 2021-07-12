@@ -1,0 +1,1 @@
+{"version":3,"sources":["pages/projects/Project.js"],"names":["Projects"],"mappings":"wGAAA,+DAEe,SAASA,IAItB,OAFE","file":"static/js/7.9f19bb2d.chunk.js","sourcesContent":["import React from 'react';\n\nexport default function Projects() {\n  const TEMPLATE = (\n    <div>Project</div>\n  );\n  return TEMPLATE;\n}"],"sourceRoot":""}

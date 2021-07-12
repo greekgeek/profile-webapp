@@ -1,0 +1,33 @@
+@import 'src/scss/_global.scss';
+.nav {
+  height: $nav-width;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1024px;
+  .nav-list { 
+    white-space: nowrap;
+    margin-bottom: 0;
+    min-width: 30%;
+    overflow: auto;
+    .nav-list__items {
+      position: relative;
+      display: inline-block;
+      padding: 10px 5px;
+      width: auto;
+      font-size: $nav-fontSize;
+    }
+  }
+  .nav-logo {
+    img {
+      position: relative;
+      max-width: 60px;
+      min-width: 30px;
+      width: 5%;
+    }
+  }
+}
+@import './nav-tab.scss';
+@import './nav-mobile.scss';

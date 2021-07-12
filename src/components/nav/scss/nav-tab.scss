@@ -1,0 +1,16 @@
+@import 'src/scss/_media.scss';
+@import 'src/scss/_global.scss';
+@include media-tab {
+  .nav {
+    margin-top: 20px;
+    flex-direction: column;
+    .nav-list { 
+        width: 100%;
+        overflow: auto;
+        padding-bottom: 40px;
+    }
+    .nav-logo {
+        width: 100%;
+    }
+  }
+}

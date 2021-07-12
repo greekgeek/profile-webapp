@@ -1,0 +1,48 @@
+@import 'src/scss/_global.scss';
+.homepg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: 1024px;
+  .homepg__rowone {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .rowone-colone {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      img {
+        width: 75%;
+        max-width: 300px;
+        min-width: 250px;
+      }
+    }
+    .rowone-coltwo{
+      position: relative;
+      width: 100%;
+      p {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  .homepg__rowtwo {
+    position: relative;
+    min-height: 250px;
+  }
+  .progress {
+    width: 70%;
+  }
+  .progress-label {
+    position: relative;
+    height: 75px;
+    width: 30%;
+    img {
+      position: relative;
+      width: 50%;
+    }
+  }
+}
+@import './home-mobile.scss';
+@import './home-tab.scss';

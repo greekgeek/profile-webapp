@@ -1,0 +1,16 @@
+@import 'src/scss/_media.scss';
+@import 'src/scss/_global.scss';
+@include media-tab {
+  .website-header {
+      margin: 10px 10px;
+      display: flex;
+      justify-content: center;
+  }
+  .website-body {
+      position: absolute;
+      height: calc(100% - #{$nav-width + 40px});
+      width: 100%;
+      display: flex;
+      justify-content: center;
+  }
+}
