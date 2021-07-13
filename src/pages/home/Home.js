@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
 import './scss/home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@@/store/actions/profile';
@@ -17,12 +17,12 @@ export default function Home() {
   frontEndStack.length = 3;
   frontEndStack.fill(1);
 
-  const componentDidMount = () => {
-    dispatch(getProfile(userID));
-  }
   const componentDidUnmount = () => {
     console.log('Component Umount');
-  }
+  };
+  const componentDidMount = useCallback(() => {
+    dispatch(getProfile(userID));
+  }, [userID, dispatch]);
   useEffect(() => {
     componentDidMount();
     return componentDidUnmount;
