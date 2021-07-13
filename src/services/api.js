@@ -1,6 +1,6 @@
 function uri() {
-  return process.env.NODE_ENV ? 'http://localhost:8081/api':
-  'https://localhost:8081/api';
+  return process.env.NODE_ENV ? `http://20.204.67.210:8081/api`:
+  `http://20.204.67.210:8081/api`;
 }
 const API = {
   async get_profile(userID) {

@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/blog/Blog.js"],"names":["Blog"],"mappings":"wGAAA,+DAEe,SAASA,IAItB,OAFE","file":"static/js/6.39b99c15.chunk.js","sourcesContent":["import React from 'react';\n\nexport default function Blog() {\n  const TEMPLATE = (\n    <div>YAhoo Blogs</div>\n  );\n  return TEMPLATE;\n}"],"sourceRoot":""}

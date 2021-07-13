@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/aboutme/AboutMe.js"],"names":["AboutMe"],"mappings":"wGAAA,+DAEe,SAASA,IAItB,OAFE","file":"static/js/5.a7f017b5.chunk.js","sourcesContent":["import React from 'react';\n\nexport default function AboutMe() {\n  const TEMPLATE = (\n    <div>AboutME</div>\n  );\n  return TEMPLATE;\n}"],"sourceRoot":""}

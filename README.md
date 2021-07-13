@@ -68,3 +68,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Kubernets:
+- kubectl create -f manifest.yml
+- kubectl delete -f manifest.yml
+// list the deployment
+ - kubectl get deploy
+// list the pods
+ - kubectl get po
+// list the service
+ - kubectl get svc
+
+## Docker Build
+- docker build -t profile-webapp .
