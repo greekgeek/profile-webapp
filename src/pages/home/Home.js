@@ -26,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     componentDidMount();
     return componentDidUnmount;
-  }, [])
+  }, [componentDidMount])
   let frontEndStackMemo = frontEndStack.map(() => {
     return {
       percent: (Math.random() * 100) >> 0,
