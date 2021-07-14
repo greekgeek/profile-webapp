@@ -4,16 +4,18 @@ import routes from './routes';
 import React, { Suspense, Fragment } from 'react';
 import RouteWithSubRoutes from './subcomp/RouteWithSubRoutes';
 import Nav from '@@/components/nav/Nav';
-import Loading from '@@/components/loading/Loading';
+// import Loading from '@@/components/loading/Loading';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function App() {
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   return (
     <BrowserRouter>
       <Fragment>
         <header className="website-header" >
           <Nav routes={routes}/>
         </header>
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={antIcon}>
           <main className="website-body">
             <Switch>
               {routes.map((route, i) => (

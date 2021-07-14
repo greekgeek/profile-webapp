@@ -3,44 +3,71 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  max-width: 1024px;
+  max-width: 1500px;
   .homepg__rowone {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
-    .rowone-colone {
-      position: relative;
-      width: 100%;
-      text-align: center;
-      img {
-        width: 75%;
-        max-width: 300px;
-        min-width: 250px;
+    .homepg__rowonewrap {
+      width: 100%; 
+      .rowone-colone {
+        position: relative;
+        width: 100%;
+        text-align: center;
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 75%;
+          max-width: 300px;
+          min-width: 250px;
+        }
       }
-    }
-    .rowone-coltwo{
-      position: relative;
-      width: 100%;
-      p {
-        font-size: 1.2rem;
+      .rowone-coltwo{
+        position: relative;
+        width: 100%;
+        p {
+          font-size: 1.2rem;
+        }
       }
     }
   }
   .homepg__rowtwo {
     position: relative;
     min-height: 250px;
+    .skill {
+      list-style-type: none;
+    }
   }
-  .progress {
-    width: 70%;
-  }
-  .progress-label {
+  .homepg__rowthree {
     position: relative;
-    height: 75px;
-    width: 30%;
-    img {
-      position: relative;
-      width: 50%;
+    min-height: 300px;
+    .productlist {
+      width: 100%;
+      padding: 20px 0;
+      overflow: auto;
+      white-space: nowrap;
+      .products {
+        position: relative;
+        list-style-type: none;
+        display: inline-block;
+        .ant-card-body {
+          height: 100%;
+          figure {
+            text-align: center;
+            img {
+              min-height: 100px;
+              max-height: 300px;
+              height: 10vw;
+            }
+            figcaption {
+              text-align: center;
+            }
+          }
+        }
+      }
     }
   }
 }

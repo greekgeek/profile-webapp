@@ -1,9 +1,9 @@
-import React, { Fragment, useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './scss/home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@@/store/actions/profile';
-import { Row, Col, Typography, Progress, Divider } from 'antd';
-const { Title } = Typography;
+import { Row, Col, Card, Badge, Tag, Typography, Progress, Divider, Skeleton } from 'antd';
+const { Title, Text } = Typography;
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -12,6 +12,8 @@ export default function Home() {
     splash_image = '',
     splash_intro = '',
     userID = '',
+    tech_skills = {},
+    tech_products = {},
    } = useSelector(state => state.profile);
   let frontEndStack = [];
   frontEndStack.length = 3;
@@ -20,116 +22,126 @@ export default function Home() {
   const componentDidUnmount = () => {
     console.log('Component Umount');
   };
-  const componentDidMount = useCallback(() => {
-    dispatch(getProfile(userID));
-  }, [userID, dispatch]);
   useEffect(() => {
-    componentDidMount();
+    dispatch(getProfile(userID));
     return componentDidUnmount;
-  }, [componentDidMount])
-  let frontEndStackMemo = frontEndStack.map(() => {
-    return {
-      percent: (Math.random() * 100) >> 0,
-      icon: `${process.env.PUBLIC_URL}/home/vue-icon.png`,
-      stack: 'vuejs'
-    }
-  }, [frontEndStack]);
-  console.log(frontEndStack);
-  const frontEndHTML = useMemo(() => {
-    return frontEndStackMemo.map((tech) => {
-      return (<Fragment>
-        <Progress className="progress" percent={tech.percent} showInfo={false} />
-        <label htmlFor={tech.stack} className="progress-label">
-          <Title level={5}>{tech.stack}</Title>
-        </label>
-      </Fragment>)
-    });
-  }, [frontEndStackMemo]);
-  const databaseHTML = useMemo(() => {
-    return frontEndStackMemo.map((tech) => {
-      return (<Fragment>
-        <Progress className="progress" percent={tech.percent} showInfo={false} />
-        <label htmlFor={tech.stack} className="progress-label">
-          <Title level={5}>{tech.stack}</Title>
-        </label>
-      </Fragment>)
-    });
-  }, [frontEndStackMemo])
-  const backendHTML = useMemo(() => {
-    return frontEndStackMemo.map((tech) => {
-      return (<Fragment>
-        <Progress status={'active'} className="progress" percent={tech.percent} showInfo={false} />
-        <label htmlFor={tech.stack} className="progress-label">
-          <Title level={5}>{tech.stack}</Title>
-        </label>
-      </Fragment>)
-    });
-  }, [frontEndStackMemo])
+  }, []);
+  const productCardHTML = useMemo(() => {
+    return (
+      <ul className="productlist">
+        {
+          tech_products.products.map((product) => {
+            return (
+              <li className="products">
+                <Card>
+                  <figure>
+                    <img src={product.url} alt={product.title}/>
+                    <Divider type="horizontal" />
+                      <figcaption>
+                        <Title level={4}>{product.title}</Title>
+                      </figcaption>
+                  </figure>
+                  </Card>
+              </li>
+            )
+          })
+        }
+      </ul>
+    );
+  }, [tech_products]);
+  const skillsCardHTML = useMemo(() => {
+    // console.log(tech_skills);
+      return tech_skills.skills.map((skillArr) => {
+        return (
+          <Col className={`${skillArr[0]}`} xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 8, offset: 2}}  sm={{ span: 24, offset: 0}} >
+            <Card style={{ width: 300, marginTop: 16, width: '100%' }}>
+              <Title level={3}>{skillArr[0]}</Title>
+              <Divider type="horizontal" />
+              <ul className="Name">
+              {(skillArr[1].map(skill => {
+                const yearExp = skill.exp >> 0;
+                const monthexp = skill.exp - yearExp;
+                return (
+                  <li className="skill">
+                    {/* <Tag color="#108ee9"> */}
+                    <Badge color={'gold'}/>
+                    <Text strong>{skill.title}</Text>
+                    <Text  code style={{'margin-left': '10px', 'font-size': '0.8rem'}}>{yearExp > 0 ? `${yearExp} yrs`: ''} {(monthexp > 0 ? `${(monthexp * 10) >> 0} mnth` : '')}</Text>
+                    <Progress percent={skill.rate * 100}  status={skill.running} format={() =>skill.icon } />
+                  </li>
+                )
+              }))}
+            </ul>
+            </Card>
+          </Col>
+        )
+      });
+  }, [tech_skills])
   const TEMPLATE = (
     <section className="homepg">
       <article className="homepg__rowone">
-        <Row justify="space-around" align="middle">
+        <Row justify="space-around" align="middle" className="homepg__rowonewrap">
           <Col xs={24} lg={10} sm={12}>
-            <section className="rowone-colone">
-              <img src={splash_image} alt="Author splash"/>
+          <section className="rowone-colone">
+            {(name ?  
+              (
+                <img src={splash_image} alt="Author splash"/>
+              )
+                :
+              (<Skeleton.Image active={true}/>)
+            )}
             </section>
           </Col>
           <Col xs={20} lg={14} sm={12}>
             <section className="rowone-coltwo">
-              <Title level={2}>
-                Hi My Name is {name}
-                </Title>
-                <Title level={3}>
-                  {splash_intro}
-              </Title>
+              {(name ? (
+                <>
+                  <Title level={2}>
+                    Hi My Name is {name}
+                    </Title>
+                    <Title level={3}>
+                      {splash_intro}
+                  </Title>
+                </>
+              ):
+              (
+                <Skeleton active={true}  width={"100%"}/>
+              )
+              )}
             </section>
           </Col>
         </Row>
       </article>
       <Divider type="horizontal" />
       <article className="homepg__rowtwo">
-        <Row  align="top">
-        <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Title>Technology Stack</Title>
-            <Title level={4}>I started my career with Web application devevelopment for Samsung products using latest framework and moving forware learning and applying in backend technologies/framework</Title>
+        <Row  align="top" class="homepg__rowtwo_colone">
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
+            <Title>Technology Stack </Title>
+            {
+              (tech_skills.intro) ? 
+              (
+                <Title level={4}>{tech_skills.intro}</Title>
+              )
+              :
+                (<Skeleton active={true}/>)
+            }
           </Col>
         </Row>
         <Row align="top">
-          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 2 }} md={{span: 20, push: 2 }} sm={{span: 20 }}>
-            <section className="rowtwo-colone">
-              <Title level={2}>BackEnd Stack</Title>
-              {backendHTML}
-            </section>
-          </Col>
-          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 0 }} md={{span: 20, push: 2 }} sm={{span: 20}}>
-            <section className="rowtwo-coltwo">
-                <Title level={2}>FrontEnd Stack</Title>
-                {frontEndHTML}
-            </section>
-          </Col>
-          <Col xs={{span: 20, push: 2 }} lg={{span: 8, push: 0 }} md={{span: 20, push: 2 }} sm={{span: 20 }}>
-            <section className="rowtwo-coltwo">
-                <Title level={2}>Database Stack</Title>
-                {databaseHTML}
-            </section>
-          </Col>
+            {skillsCardHTML}
         </Row>
       </article>
       <Divider type="horizontal" />
-      {/* <article className="homepg__rowthree"> Make this into timeline
-        <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} lg={24} sm={24}>
-            <Title>Tools</Title>
-            <Title level={4}>I started my career with Web application devevelopment for Samsung products using latest framework and moving forware learning and applying in backend technologies/framework</Title>
-          </Col>
-        </Row>
-      </article> */}
-      <Divider type="horizontal" />
-      <article className="homepg__rowfour">
+      <article className="homepg__rowthree">
         <Row  align="top">
           <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
             <Title>Product/Device Worked on</Title>
-            <Title level={4}>I started my career with Web application devevelopment for Samsung products using latest framework and moving forware learning and applying in backend technologies/framework</Title>
+            <Title level={4}>{tech_products.intro}</Title>
+          </Col>
+        </Row>
+        <Row align="top">
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
+            {productCardHTML}
           </Col>
         </Row>
       </article>

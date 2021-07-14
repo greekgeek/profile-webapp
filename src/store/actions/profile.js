@@ -5,6 +5,8 @@ function setProfile({
   alias_name = '',
   splash_image = '',
   splash_intro = '',
+  tech_skills = {},
+  tech_products = {},
 } = {}) {
   return {
     type: 'SET_PROFILE',
@@ -13,6 +15,8 @@ function setProfile({
       alias_name,
       splash_image,
       splash_intro,
+      tech_skills,
+      tech_products,
     }
   }
 }
@@ -20,7 +24,6 @@ function setProfile({
 export const getProfile = (userID) => {
   return (dispatch) => {
     return api.get_profile(userID).then((result) => {
-      console.log(result);  
       dispatch(setProfile(result));
     });
   }
