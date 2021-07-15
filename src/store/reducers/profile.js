@@ -12,6 +12,7 @@ const st = {
     intro: '',
     products: [],
   },
+  projects: [],
 };
 export default function profileReducer(state = st, actions = {type:'default'}) {
   console.log('ProfileReducer', actions);

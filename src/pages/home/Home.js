@@ -2,7 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import './scss/home.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@@/store/actions/profile';
-import { Row, Col, Card, Badge, Tag, Typography, Progress, Divider, Skeleton } from 'antd';
+import { Row, Col, Card, Tag, Badge, Typography, Progress, Divider, Skeleton } from 'antd';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
 const { Title, Text } = Typography;
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     userID = '',
     tech_skills = {},
     tech_products = {},
+    projects = [],
    } = useSelector(state => state.profile);
   let frontEndStack = [];
   frontEndStack.length = 3;
@@ -34,13 +36,13 @@ export default function Home() {
             return (
               <li className="products">
                 <Card>
-                  <figure>
-                    <img src={product.url} alt={product.title}/>
-                    <Divider type="horizontal" />
-                      <figcaption>
-                        <Title level={4}>{product.title}</Title>
-                      </figcaption>
-                  </figure>
+                    <figure>
+                      <img src={product.url} alt={product.title}/>
+                      <Divider type="horizontal" />
+                        <figcaption>
+                          <Title level={4}>{product.title}</Title>
+                        </figcaption>
+                    </figure>
                   </Card>
               </li>
             )
@@ -49,12 +51,42 @@ export default function Home() {
       </ul>
     );
   }, [tech_products]);
+  const projectHTML = useMemo(() => {
+    return projects.map((prjt) => {
+     return (
+    <Card>
+        <section>
+          <Title level={3}>{prjt.project}</Title>
+        </section>
+        <Divider type="horizontal" />
+        <section>
+          <details>
+            <summary style={{ 'margin-bottom': '10px'}}>
+              <span style={{ 'font-size': '1.4rem', 'font-weight': '500'}}>Technology</span>
+            </summary>
+            {
+              prjt.technology.map((tech) => {
+                return (
+                  <Tag color="default">
+                      {tech}
+                  </Tag>
+                )
+              })
+            }
+          </details>
+            <p style={{ 'font-size': '1.4rem', 'font-weight': '500', 'margin-top' : '30px'}}>
+              {prjt.summary}
+            </p>
+        </section>
+    </Card>)
+    })
+  }, [projects]);
   const skillsCardHTML = useMemo(() => {
     // console.log(tech_skills);
       return tech_skills.skills.map((skillArr) => {
         return (
           <Col className={`${skillArr[0]}`} xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 8, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Card style={{ width: 300, marginTop: 16, width: '100%' }}>
+            <Card style={{ marginTop: 16, width: '100%' }}>
               <Title level={3}>{skillArr[0]}</Title>
               <Divider type="horizontal" />
               <ul className="Name">
@@ -142,6 +174,18 @@ export default function Home() {
         <Row align="top">
           <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
             {productCardHTML}
+          </Col>
+        </Row>
+      </article>
+      <article className="homepg__rowfour">
+        <Row  align="top">
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
+            <Title>Industrial Projects</Title>
+          </Col>
+        </Row>
+        <Row align="top">
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
+            {projectHTML}
           </Col>
         </Row>
       </article>

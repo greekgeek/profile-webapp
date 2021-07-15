@@ -7,6 +7,7 @@ function setProfile({
   splash_intro = '',
   tech_skills = {},
   tech_products = {},
+  projects = []
 } = {}) {
   return {
     type: 'SET_PROFILE',
@@ -17,6 +18,7 @@ function setProfile({
       splash_intro,
       tech_skills,
       tech_products,
+      projects,
     }
   }
 }
