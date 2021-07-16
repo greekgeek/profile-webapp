@@ -7,7 +7,7 @@ export default function Nav(props) {
   const linkHTML = useMemo(() => {
     return props.routes.map((nav) => {
       return (
-        <li className="nav-list__items">
+        <li className="nav-list__items" key={nav.title}>
           <Link key={nav.title} to={nav.path}>{nav.title}</Link>
           <Divider type="vertical" />
         </li>

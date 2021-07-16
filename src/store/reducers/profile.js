@@ -13,6 +13,7 @@ const st = {
     products: [],
   },
   projects: [],
+  career_path: [],
 };
 export default function profileReducer(state = st, actions = {type:'default'}) {
   console.log('ProfileReducer', actions);
@@ -24,6 +25,7 @@ export default function profileReducer(state = st, actions = {type:'default'}) {
       const groupedSkill = groupBySkillsHelper(actions.payload?.tech_skills?.skills)
       actions.payload.tech_skills.skills =  groupedSkill;
       const nwState = { ...state, ...actions.payload };
+      console.log(nwState);
       return  nwState;
     default:
       return state;

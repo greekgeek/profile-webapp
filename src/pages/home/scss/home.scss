@@ -70,6 +70,34 @@
       }
     }
   }
+  .homepg__rowfive {
+    .career__stop--alternate:nth-child(even) {
+      figure {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        figcaption {
+          order: 1;
+        }
+        img {
+          order: 2;
+        }
+      }
+    }
+    .career__stop--alternate:nth-child(odd) {
+      figure {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        figcaption {
+          order: 2;
+        }
+        img {
+          order: 1;
+        }
+      }
+    }
+  }
 }
 @import './home-mobile.scss';
 @import './home-tab.scss';

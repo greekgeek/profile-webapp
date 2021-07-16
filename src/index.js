@@ -9,6 +9,7 @@ import './scss/_global.scss';
 import 'antd/dist/antd.css';
 import AppRouter from './Router/Router';
 import reportWebVitals from './reportWebVitals';
+import listener from './services/listeners';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+listener.init();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
