@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '@@/store/actions/profile';
 import { Row, Col, Timeline, Card, Tag, Badge, Typography, Progress, Divider, Skeleton } from 'antd';
 import listeners from '@@/services/listeners';
+import CustomSkeleton from '@@/components/skeleton/skeleton';
 const { Title, Text } = Typography;
 
 export default function Home() {
@@ -15,8 +16,9 @@ export default function Home() {
     userID = 'manas22@gmail.com',
     tech_skills = {},
     tech_products = {},
-    projects = [],
+    projects = {},
     career_path = [],
+    education_path = [],
    } = useSelector(state => state.profile);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const [listenerID, setListenerID] = useState(window.innerWidth);
@@ -62,20 +64,21 @@ export default function Home() {
     return (
       <Timeline mode={windowSize > breakEvenpoint ? 'alternate': 'left'} className={{"career__line": true}}>
         {
-          career_path.map((career) => {
+          career_path.path.map((career) => {
             return (
               <Timeline.Item className={{ "career__stop": true, "career__stop--alternate": (windowSize > breakEvenpoint) }} >
                 <Card className={"career__stop-desc"}>
                  <figure>
+                    <img src={career.url} width="50px" alt="Organisation Logo"/>
                     <figcaption>
                       <Title level={3}>{career.org}</Title>
-                      <Text code>{career.role}</Text>
                     </figcaption>
-                    <img src={career.url} width="50px" alt="Organisation Logo"/>
                 </figure> 
                  <section>
-                 <p code>{career.role}</p>
-                 <p disabled>{career.group}</p>
+                 <p code>{career.group}</p>
+                 <Text code>{career.role}</Text>
+                 <br/>
+                 <Text disabled>{career.more}</Text>
                  </section> 
                 </Card>
               </Timeline.Item>
@@ -85,23 +88,52 @@ export default function Home() {
       </Timeline>
     );
   }, [windowSize, career_path]);
+  const educationTimelineHTML = useMemo(() => {
+    console.log(windowSize);
+    return (
+      <Timeline mode={windowSize > breakEvenpoint ? 'alternate': 'left'} className={{"career__line": true}}>
+        {
+          education_path.path.map((career) => {
+            return (
+              <Timeline.Item className={{ "career__stop": true, "career__stop--alternate": (windowSize > breakEvenpoint) }} >
+                <Card className={"career__stop-desc"}>
+                 <figure>
+                  <img src={career.url} width="50px" alt="Organisation Logo"/>
+                    <figcaption>
+                      <Title className="pulldown-h3" level={3}>{career.org}</Title>
+                    </figcaption>
+                </figure> 
+                 <section>
+                 <p>{career.stream}</p>
+                 <Text code>{career.role}</Text>
+                 <br/>
+                 <Text disabled>{career.more}</Text>
+                 </section> 
+                </Card>
+              </Timeline.Item>
+            )
+          })
+        }
+      </Timeline>
+    );
+  }, [windowSize, education_path]);
   const projectHTML = useMemo(() => {
-    return projects.map((prjt) => {
+    return projects.history.map((prjt) => {
      return (
     <Card>
-        <section>
-          <figure>
-            <img width="75px" src={prjt.company_url} alt="Organisation Logo"></img>
-            <figcaption style={{'marginTop': '12px'}}>
+        <section className="project">
+          <figure className="project__figure">
+            <img src={prjt.company_url} className="project__figure-img" alt="Organisation Logo"></img>
+            <figcaption className="project__figure-caption">
               <Title level={3}>{prjt.title}</Title>
             </figcaption>
           </figure>
         </section>
         <Divider type="horizontal" />
-        <section>
-          <details>
-            <summary style={{ 'marginBottom': '10px'}}>
-              <span style={{ 'fontSize': '1.4rem', 'fontWeight': '500'}}>Technology</span>
+        <section class="details">
+          <details open>
+            <summary className="project__technology">
+              <span  className="project__technology-head">Technology</span>
             </summary>
             {
               prjt.technology.map((tech) => {
@@ -113,9 +145,14 @@ export default function Home() {
               })
             }
           </details>
-            <p style={{ 'fontSize': '1.4rem', 'fontWeight': '500', 'marginTop' : '30px'}}>
+          <details open>
+            <summary className="project__summary">
+              <span  className="project__summary-head">Project Brief</span>
+            </summary>
+            <p className="project__info">
               {prjt.summary}
             </p>
+          </details>
         </section>
     </Card>)
     })
@@ -124,11 +161,11 @@ export default function Home() {
     // console.log(tech_skills);
       return tech_skills.skills.map((skillArr) => {
         return (
-          <Col className={`${skillArr[0]}`} xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 8, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Card style={{ marginTop: 16, width: '100%' }}>
+          <Col className={{[skillArr[0]]: true, 'skill-col': true}} xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 8, offset: 2}}  sm={{ span: 20, offset: 2}} >
+            <Card>
               <Title level={3}>{skillArr[0]}</Title>
               <Divider type="horizontal" />
-              <ul className="Name">
+              <ul className="">
               {(skillArr[1].map(skill => {
                 const yearExp = skill.exp >> 0;
                 const monthexp = skill.exp - yearExp;
@@ -137,7 +174,7 @@ export default function Home() {
                     {/* <Tag color="#108ee9"> */}
                     <Badge color={'gold'}/>
                     <Text strong>{skill.title}</Text>
-                    <Text  code style={{'marginLeft': '10px', 'fontSize': '0.8rem'}}>{yearExp > 0 ? `${yearExp} yrs`: ''} {(monthexp > 0 ? `${(monthexp * 10) >> 0} mnth` : '')}</Text>
+                    <Text className="skill__experience" code>{yearExp > 0 ? `${yearExp} yrs`: ''} {(monthexp > 0 ? `${(monthexp * 10) >> 0} mnth` : '')}</Text>
                     <Progress percent={skill.rate * 100}  status={skill.running} format={() =>skill.icon } />
                   </li>
                 )
@@ -183,11 +220,11 @@ export default function Home() {
           </Col>
         </Row>
       </article>
-      <Divider type="horizontal" />
+      <Divider type="horizontal" orientation="left"><Title>Technology Stack </Title></Divider>
       <article className="homepg__rowtwo">
         <Row  align="top" className="homepg__rowtwo_colone">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Title>Technology Stack </Title>
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+            
             {
               (tech_skills.intro) ? 
               (
@@ -202,44 +239,65 @@ export default function Home() {
             {skillsCardHTML}
         </Row>
       </article>
-      <Divider type="horizontal" />
-      <article className="homepg__rowthree">
-        <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Title>Product/Device Worked on</Title>
-            <Title level={4}>{tech_products.intro}</Title>
-          </Col>
-        </Row>
-        <Row align="top">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            {productCardHTML}
-          </Col>
-        </Row>
+      <Divider type="horizontal" orientation="left"><Title>Product Experience</Title></Divider>
+        <article className="homepg__rowthree">
+        <CustomSkeleton loading={tech_products.intro ?? true}>
+          <Row  align="top">
+            <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+              <Title level={4}>{tech_products.intro}</Title>
+            </Col>
+          </Row>
+          <Row align="top">
+            <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+              {productCardHTML}
+            </Col>
+          </Row>
+        </CustomSkeleton>
       </article>
+      <Divider type="horizontal" orientation="left"><Title>Industrial Projects</Title></Divider>
       <article className="homepg__rowfour">
+        <CustomSkeleton loading={projects.intro ?? true}>
         <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Title>Industrial Projects</Title>
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+            <Title level={4}>{projects.intro}</Title>
           </Col>
         </Row>
         <Row align="top">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
+          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
             {projectHTML}
           </Col>
         </Row>
+      </CustomSkeleton>
       </article>
+      <Divider type="horizontal" orientation="left"><Title>Career Journey</Title></Divider>
       <article className="homepg__rowfive">
-        <Row  align="top">
-          <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 24, offset: 0}} >
-            <Title>Career Journey</Title>
-            <Title level={4}> Coming from Science & Maths background, I starte my career Journey in computer science from College. On completion of Graduation, I moved to corporate world with Samsung R&D </Title>
-          </Col>
-        </Row>
-        <Row align="top">
-          <Col xs={{span: 24, push: 0, offset: 0}} md={{ span: 18, push: 3, offset: 0 }} lg={{ span: 20, push: 2, offset: 0 }}  sm={{span: 24, push: 0, offset: 0}} >
-            {careerTimelineHTML}
-          </Col>
-        </Row>
+      <CustomSkeleton loading={career_path.intro ?? true}>
+          <Row  align="top">
+            <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+              <Title level={4}> {career_path.intro}</Title>
+            </Col>
+          </Row>
+          <Row align="top">
+            <Col xs={{span: 20, push: 0, offset: 2}} md={{ span: 18, push: 3, offset: 0 }} lg={{ span: 20, push: 2, offset: 0 }}  sm={{span: 20, push: 0, offset: 2}} >
+              {careerTimelineHTML}
+            </Col>
+          </Row>
+      </CustomSkeleton>
+      </article>
+      <Divider type="horizontal" orientation="left"><Title>Education Journey</Title></Divider>
+      <article className="homepg__rowfive">
+        <CustomSkeleton loading={education_path.intro ?? true}>
+          <Row  align="top">
+            <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
+              <Title level={4}> {education_path.intro}</Title>
+            </Col>
+          </Row>
+          <Row align="top">
+            <Col xs={{span: 20, push: 0, offset: 2}} md={{ span: 18, push: 3, offset: 0 }} lg={{ span: 20, push: 2, offset: 0 }}  sm={{span: 20, push: 0, offset: 2}} >
+              {educationTimelineHTML}
+            </Col>
+          </Row>
+        </CustomSkeleton>
       </article>
     </section>
   );

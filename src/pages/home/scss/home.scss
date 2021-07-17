@@ -37,8 +37,18 @@
   .homepg__rowtwo {
     position: relative;
     min-height: 250px;
-    .skill {
-      list-style-type: none;
+    .skill-col {
+      .skill-col__card {
+        margin-top: 16px;
+        width: '100%';
+        .skill {
+          list-style-type: none;
+          .skill__experience {
+            margin-left: '10px';
+            font-size: '1rem';
+          }
+        }
+      }
     }
   }
   .homepg__rowthree {
@@ -78,6 +88,10 @@
         justify-content: flex-end;
         figcaption {
           order: 1;
+          padding: 0 10px;
+          &.pulldown-h3 {
+            margin-bottom: 0;
+          }
         }
         img {
           order: 2;
@@ -91,6 +105,74 @@
         justify-content: flex-start;
         figcaption {
           order: 2;
+          padding: 0 10px;
+          &.pulldown-h3 {
+            margin-bottom: 0;
+          }
+        }
+        img {
+          order: 1;
+        }
+      }
+    }
+  }
+  .homepg__rowfour {
+    position: relative;
+    min-height: 300px;
+    .project {
+      .project__figure {
+        .project__figure-img {
+          width: 75px;
+        }
+        .project__figure-caption {
+          margin-top: 12px;
+        }
+      }
+    }
+    .details {
+      .project__summary, .project__technology {
+        margin-bottom: 10px;
+      }
+      .project__summary-head,.project__technology-head {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
+      .project__info {
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin-top : '30px';
+      }
+    }
+  }
+  .homepg__rowsix {
+    .career__stop--alternate:nth-child(even) {
+      figure {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        figcaption {
+          order: 1;
+          padding: 0 10px;
+          &.pulldown-h3 {
+            margin-bottom: 0;
+          }
+        }
+        img {
+          order: 2;
+        }
+      }
+    }
+    .career__stop--alternate:nth-child(odd) {
+      figure {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        figcaption {
+          order: 2;
+          padding: 0 10px;
+          &.pulldown-h3 {
+            margin-bottom: 0;
+          }
         }
         img {
           order: 1;

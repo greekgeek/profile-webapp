@@ -12,8 +12,18 @@ const st = {
     intro: '',
     products: [],
   },
-  projects: [],
-  career_path: [],
+  projects: {
+    intro: '',
+    history: [],
+  },
+  career_path: {
+    intro: '',
+    path: [],
+  },
+  education_path: {
+    intro: '',
+    path: [],
+  },
 };
 export default function profileReducer(state = st, actions = {type:'default'}) {
   console.log('ProfileReducer', actions);
@@ -24,7 +34,13 @@ export default function profileReducer(state = st, actions = {type:'default'}) {
       // groupBySKills
       const groupedSkill = groupBySkillsHelper(actions.payload?.tech_skills?.skills)
       actions.payload.tech_skills.skills =  groupedSkill;
-      const nwState = { ...state, ...actions.payload };
+      const project_payload = {
+        projects: {}
+      };
+      console.log(actions.payload?.project_intro)
+      project_payload.projects.history = actions.payload?.projects ?? [];
+      project_payload.projects.intro = actions.payload?.project_intro ?? '';
+      const nwState = { ...state, ...actions.payload, ...project_payload};
       console.log(nwState);
       return  nwState;
     default:
