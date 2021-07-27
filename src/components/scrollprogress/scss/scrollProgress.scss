@@ -1,0 +1,18 @@
+@import 'src/scss/_global.scss';
+.scrollProgress {
+  position: fixed;
+  height: 4px;
+  z-index: 9;
+  background-color: transparent;
+  width: 100%;
+  top: 0;
+  &__progress {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background-color: #ff9800;
+    transition: $standard;
+    border-radius: 10px;
+  }
+}

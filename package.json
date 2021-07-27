@@ -79,7 +79,7 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "dev": "node scripts/start.js",
+    "dev": "node scripts/start.js --type dev",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "start": "node scripts/start.js"

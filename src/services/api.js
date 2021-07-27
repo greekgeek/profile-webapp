@@ -1,6 +1,6 @@
 function uri() {
-  console.log(process.env);
-  return process.env.NODE_ENV ? `http://${process.env.SERVER_URI}:${process.env.SERVER_PORT}/api`:
+  console.log(process.env.ARG_NODE_ENV);
+  return process.env.ARG_NODE_ENV === 'development' ? `http://${process.env.SERVER_URL}:${process.env.SERVER_PORT}/api`:
   `http://${process.env.SERVER_URI}:${process.env.SERVER_PORT}/api`;
 }
 const API = {

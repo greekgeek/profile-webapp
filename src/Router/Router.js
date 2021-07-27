@@ -4,6 +4,7 @@ import routes from './routes';
 import React, { Suspense, Fragment } from 'react';
 import RouteWithSubRoutes from './subcomp/RouteWithSubRoutes';
 import Nav from '@@/components/nav/Nav';
+import ScrollProgress from '@@/components/scrollprogress/ScrollProgress';
 // import Loading from '@@/components/loading/Loading';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -12,6 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Fragment>
+        <ScrollProgress></ScrollProgress>
         <header className="website-header" >
           <Nav routes={routes}/>
         </header>

@@ -89,7 +89,6 @@ export default function Home() {
     );
   }, [windowSize, career_path]);
   const educationTimelineHTML = useMemo(() => {
-    console.log(windowSize);
     return (
       <Timeline mode={windowSize > breakEvenpoint ? 'alternate': 'left'} className={{"career__line": true}}>
         {
@@ -130,7 +129,7 @@ export default function Home() {
           </figure>
         </section>
         <Divider type="horizontal" />
-        <section class="details">
+        <section className="details">
           <details open>
             <summary className="project__technology">
               <span  className="project__technology-head">Technology</span>
@@ -220,7 +219,7 @@ export default function Home() {
           </Col>
         </Row>
       </article>
-      <Divider type="horizontal" orientation="left"><Title>Technology Stack </Title></Divider>
+      <Divider type="horizontal" orientation="left"><Title className="headingTitle">Technology Stack </Title></Divider>
       <article className="homepg__rowtwo">
         <Row  align="top" className="homepg__rowtwo_colone">
           <Col xs={{span: 20, offset: 2 }} md={{ span: 20, offset: 2}} lg={{ span: 20, offset: 2}}  sm={{ span: 20, offset: 2}} >
@@ -239,7 +238,7 @@ export default function Home() {
             {skillsCardHTML}
         </Row>
       </article>
-      <Divider type="horizontal" orientation="left"><Title>Product Experience</Title></Divider>
+      <Divider type="horizontal" orientation="left"><Title className="headingTitle">Product Experience</Title></Divider>
         <article className="homepg__rowthree">
         <CustomSkeleton loading={tech_products.intro ?? true}>
           <Row  align="top">
@@ -254,7 +253,7 @@ export default function Home() {
           </Row>
         </CustomSkeleton>
       </article>
-      <Divider type="horizontal" orientation="left"><Title>Industrial Projects</Title></Divider>
+      <Divider type="horizontal" orientation="left"><Title className="headingTitle">Industrial Projects</Title></Divider>
       <article className="homepg__rowfour">
         <CustomSkeleton loading={projects.intro ?? true}>
         <Row  align="top">
@@ -269,7 +268,7 @@ export default function Home() {
         </Row>
       </CustomSkeleton>
       </article>
-      <Divider type="horizontal" orientation="left"><Title>Career Journey</Title></Divider>
+      <Divider type="horizontal" orientation="left"><Title className="headingTitle">Career Journey</Title></Divider>
       <article className="homepg__rowfive">
       <CustomSkeleton loading={career_path.intro ?? true}>
           <Row  align="top">
@@ -284,7 +283,7 @@ export default function Home() {
           </Row>
       </CustomSkeleton>
       </article>
-      <Divider type="horizontal" orientation="left"><Title>Education Journey</Title></Divider>
+      <Divider type="horizontal" orientation="left"><Title className="headingTitle">Education Journey</Title></Divider>
       <article className="homepg__rowfive">
         <CustomSkeleton loading={education_path.intro ?? true}>
           <Row  align="top">

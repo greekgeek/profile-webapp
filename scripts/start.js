@@ -10,7 +10,12 @@ process.env.NODE_ENV = 'development';
 process.on('unhandledRejection', err => {
   throw err;
 });
-
+let argv = process.argv.slice(2);
+if (argv[0] === '--type') {
+  if (argv[1] === 'dev') process.env.ARG_NODE_ENV = 'development';
+} else {
+  process.env.ARG_NODE_ENV = 'production';
+}
 // Ensure environment variables are read.
 require('../config/env');
 
